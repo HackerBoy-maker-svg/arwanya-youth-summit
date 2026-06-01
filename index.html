@@ -1,0 +1,2871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARWANYA YOUTH SUMMIT 2026 | Dare to Speak, Driven To Lead</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --navy: #1e3a5f;
+            --gold: #d4af37;
+            --cream: #faf8f3;
+            --dark: #0f172a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--cream);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--navy);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-dot {
+            width: 5px;
+            height: 5px;
+            background: var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Enhanced Loading Screen */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--navy) 0%, #0f172a 100%);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 1s ease, visibility 1s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .loader-horse {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            animation: horseGallop 1.5s ease-in-out infinite;
+        }
+
+        .loader-horse svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--gold);
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8));
+        }
+
+        .loader-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 250px;
+            height: 250px;
+            border: 3px solid transparent;
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loader-ring:nth-child(2) {
+            width: 280px;
+            height: 280px;
+            border-top-color: transparent;
+            border-right-color: var(--gold);
+            animation: spin 1.5s linear infinite reverse;
+        }
+
+        .loader-ring:nth-child(3) {
+            width: 310px;
+            height: 310px;
+            border-bottom-color: var(--gold);
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes horseGallop {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            25% { transform: translateY(-30px) rotate(-10deg) scale(1.1); }
+            50% { transform: translateY(0) rotate(0deg) scale(1); }
+            75% { transform: translateY(-15px) rotate(5deg) scale(1.05); }
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .loader-text {
+            color: var(--gold);
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-top: 2rem;
+            letter-spacing: 10px;
+            animation: textPulse 2s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+        }
+
+        .loader-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 2px;
+            margin-top: 2rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loader-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold), #f0d878);
+            width: 0%;
+            animation: loadProgress 2s ease-in-out infinite;
+            box-shadow: 0 0 10px var(--gold);
+        }
+
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            50% { width: 100%; }
+            100% { width: 0%; }
+        }
+
+        @keyframes textPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(0.95); }
+        }
+
+        /* 3D Background Layers */
+        .parallax-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.1s ease-out;
+        }
+
+        .layer-1 {
+            background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 50%);
+            transform: translateZ(-100px) scale(1.5);
+        }
+
+        .layer-2 {
+            background: radial-gradient(circle at 80% 20%, rgba(30, 58, 95, 0.1) 0%, transparent 40%);
+            transform: translateZ(-50px) scale(1.2);
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            width: 100px;
+            height: 100px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            top: 70%;
+            right: 10%;
+            width: 150px;
+            height: 150px;
+            background: var(--navy);
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            animation-delay: 5s;
+        }
+
+        .shape:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            width: 80px;
+            height: 80px;
+            background: var(--gold);
+            transform: rotate(45deg);
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-30px) rotate(120deg); }
+            66% { transform: translateY(30px) rotate(240deg); }
+        }
+
+        /* Enhanced Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            perspective: 1000px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f5f0e6 0%, #e8e0d0 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            transform-style: preserve-3d;
+            animation: heroEntrance 1.5s ease-out;
+            position: relative;
+        }
+
+        @keyframes heroEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(100px) rotateX(20deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0deg);
+            }
+        }
+
+        /* BITS Pilani Button */
+        .bits-button {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            background: linear-gradient(135deg, #1e3a5f, #2d4a6f);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 30px rgba(30, 58, 95, 0.3);
+            transition: all 0.3s ease;
+            z-index: 100;
+            border: 2px solid transparent;
+        }
+
+        .bits-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(30, 58, 95, 0.4);
+            border-color: var(--gold);
+        }
+
+        .bits-button i {
+            font-size: 1.5rem;
+            color: var(--gold);
+        }
+
+        .logo-container {
+            width: 350px;
+            height: 350px;
+            margin: 0 auto 2rem;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: logoFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0) rotateY(0deg); }
+            50% { transform: translateY(-20px) rotateY(10deg); }
+        }
+
+        .logo-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 4px solid var(--gold);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3), inset 0 0 30px rgba(212, 175, 55, 0.1);
+        }
+
+        .logo-ring:nth-child(2) {
+            width: 90%;
+            height: 90%;
+            top: 5%;
+            left: 5%;
+            border-color: var(--navy);
+            animation-direction: reverse;
+            animation-duration: 15s;
+            box-shadow: 0 0 20px rgba(30, 58, 95, 0.3);
+        }
+
+        .logo-ring:nth-child(3) {
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+            border-color: var(--gold);
+            border-style: dashed;
+            animation-duration: 25s;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .horse-silhouette {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, var(--navy), #2d4a6f);
+            clip-path: path('M 60 180 Q 70 120 95 95 Q 120 70 145 80 Q 170 90 185 115 Q 200 140 195 165 Q 190 190 175 205 Q 160 220 145 215 Q 130 210 125 195 Q 120 180 115 185 Q 110 190 105 188 Q 100 186 95 180 Z');
+            animation: horseRear 3s ease-in-out infinite;
+            filter: drop-shadow(0 10px 30px rgba(30, 58, 95, 0.4));
+        }
+
+        @keyframes horseRear {
+            0%, 100% { transform: translate(-50%, -50%) rotate(-10deg); }
+            50% { transform: translate(-50%, -60%) rotate(-20deg); }
+        }
+
+        .laurel-left, .laurel-right {
+            position: absolute;
+            width: 140px;
+            height: 220px;
+            background: linear-gradient(135deg, var(--gold), #f0d878);
+            opacity: 0.4;
+            top: 50%;
+            transform: translateY(-50%);
+            filter: drop-shadow(0 5px 15px rgba(212, 175, 55, 0.3));
+        }
+
+        .laurel-left {
+            left: -60px;
+            clip-path: polygon(0 0, 100% 20%, 80% 40%, 100% 60%, 80% 80%, 100% 100%, 0 100%);
+            animation: sway 4s ease-in-out infinite;
+        }
+
+        .laurel-right {
+            right: -60px;
+            clip-path: polygon(100% 0, 0 20%, 20% 40%, 0 60%, 20% 80%, 0 100%, 100% 100%);
+            animation: sway 4s ease-in-out infinite reverse;
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: translateY(-50%) rotate(-5deg); }
+            50% { transform: translateY(-50%) rotate(5deg); }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 6rem;
+            font-weight: 900;
+            color: var(--navy);
+            text-shadow: 5px 5px 0 var(--gold), 0 0 50px rgba(212, 175, 55, 0.5);
+            margin-bottom: 1rem;
+            letter-spacing: -3px;
+            animation: titleGlow 3s ease-in-out infinite;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: 'ARWANYA';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: transparent;
+            -webkit-text-stroke: 2px rgba(212, 175, 55, 0.3);
+            z-index: -1;
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 5px 5px 0 var(--gold), 0 0 50px rgba(212, 175, 55, 0.5); }
+            50% { text-shadow: 5px 5px 0 var(--gold), 0 0 80px rgba(212, 175, 55, 0.8), 0 0 100px rgba(212, 175, 55, 0.6); }
+        }
+
+        .tagline {
+            font-size: 1.8rem;
+            color: var(--gold);
+            font-weight: 600;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.5s both;
+            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .collab-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(135deg, var(--navy), #2d4a6f);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 15px 40px rgba(30, 58, 95, 0.3);
+            animation: badgePulse 2s ease-in-out infinite;
+            transform: rotate(-2deg);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .collab-badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: badgeShine 3s infinite;
+        }
+
+        @keyframes badgeShine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: rotate(-2deg) scale(1); }
+            50% { transform: rotate(-2deg) scale(1.05); }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator i {
+            font-size: 2.5rem;
+            color: var(--navy);
+            filter: drop-shadow(0 5px 10px rgba(30, 58, 95, 0.2));
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-20px); }
+            60% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--navy);
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            box-shadow: 0 0 20px var(--gold);
+        }
+
+        /* Cards with 3D Effect */
+        .card-3d {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(30, 58, 95, 0.1);
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .card-3d::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .card-3d:hover::before {
+            left: 100%;
+        }
+
+        .card-3d:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 30px 80px rgba(30, 58, 95, 0.2);
+            border-color: var(--gold);
+        }
+
+        .committee-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-left: 5px solid var(--gold);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .committee-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .committee-card:hover::before {
+            opacity: 1;
+        }
+
+        .committee-card:hover {
+            transform: translateX(10px);
+            box-shadow: -10px 10px 30px rgba(30, 58, 95, 0.1);
+        }
+
+        /* Enhanced Pricing Cards */
+        .pricing-card {
+            background: white;
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            border: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .pricing-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .pricing-card:hover::after {
+            opacity: 1;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-20px) scale(1.05);
+        }
+
+        .pricing-card.selected {
+            border-color: var(--gold);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.4);
+            animation: cardSelected 0.5s ease;
+        }
+
+        @keyframes cardSelected {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1.05); }
+        }
+
+        .pricing-card.featured {
+            border-color: var(--gold);
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+        }
+
+        .price-tag {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--navy);
+            margin: 1rem 0;
+            position: relative;
+            display: inline-block;
+        }
+
+        .price-tag::after {
+            content: '/-';
+            font-size: 1.5rem;
+            position: absolute;
+            top: 10px;
+            right: -30px;
+        }
+
+        .select-btn {
+            margin-top: 1.5rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--navy), var(--gold));
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .select-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .select-btn:hover::before {
+            left: 100%;
+        }
+
+        .select-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Hurray Animation */
+        .hurray-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+        }
+
+        .hurray-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .hurray-content {
+            text-align: center;
+            color: white;
+            animation: hurrayBounce 1s ease;
+        }
+
+        @keyframes hurrayBounce {
+            0% { transform: scale(0) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(180deg); }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+
+        .hurray-content h2 {
+            font-size: 5rem;
+            color: var(--gold);
+            text-shadow: 0 0 50px rgba(212, 175, 55, 0.8);
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            animation: confetti-fall 3s ease-out forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Chatbot Styles */
+        .chatbot-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            transform-style: preserve-3d;
+        }
+
+        .chatbot-toggle {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--navy), var(--gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(30, 58, 95, 0.4);
+            transition: all 0.3s ease;
+            animation: chatbotPulse 2s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes chatbotPulse {
+            0%, 100% { box-shadow: 0 10px 30px rgba(30, 58, 95, 0.4); }
+            50% { box-shadow: 0 10px 50px rgba(212, 175, 55, 0.6); }
+        }
+
+        .chatbot-toggle::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .chatbot-toggle:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .chatbot-toggle i {
+            color: white;
+            font-size: 2rem;
+            z-index: 1;
+        }
+
+        .chatbot-window {
+            position: absolute;
+            bottom: 90px;
+            right: 0;
+            width: 500px;
+            height: 700px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 80px rgba(30, 58, 95, 0.3);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            transform-origin: bottom right;
+            animation: chatbotOpen 0.5s ease;
+            border: 3px solid var(--gold);
+        }
+
+        @keyframes chatbotOpen {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .chatbot-window.active {
+            display: flex;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, var(--navy), #2d4a6f);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chatbot-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .chatbot-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 1;
+            animation: avatarBounce 2s infinite;
+        }
+
+        @keyframes avatarBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .chatbot-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .chatbot-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: statusPulse 2s infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+            scroll-behavior: smooth;
+        }
+
+        .chatbot-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px;
+        }
+
+        .message {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-end;
+            gap: 0.8rem;
+            animation: messageSlide 0.3s ease;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.bot {
+            flex-direction: row;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1rem;
+        }
+
+        .message.bot .message-avatar {
+            background: var(--gold);
+            color: white;
+        }
+
+        .message.user .message-avatar {
+            background: var(--navy);
+            color: white;
+        }
+
+        .message-content {
+            max-width: 75%;
+            padding: 1rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .message.bot .message-content {
+            background: white;
+            color: var(--dark);
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, var(--navy), #2d4a6f);
+            color: white;
+            border-bottom-right-radius: 5px;
+            box-shadow: 0 5px 15px rgba(30, 58, 95, 0.3);
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+            padding: 1rem;
+            background: white;
+            border-radius: 20px;
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: fit-content;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .chatbot-input {
+            padding: 1.5rem;
+            background: white;
+            border-top: 2px solid #f1f1f1;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 30px;
+            outline: none;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .chatbot-input input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .chatbot-send {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--navy), var(--gold));
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .chatbot-send:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .quick-reply {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 2px solid var(--gold);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        .quick-reply:hover {
+            background: var(--gold);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Quick Actions Panel */
+        .quick-actions {
+            position: fixed;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .quick-action-btn {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(30, 58, 95, 0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.5rem;
+            color: var(--navy);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--navy), var(--gold));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .quick-action-btn i {
+            position: relative;
+            z-index: 1;
+        }
+
+        .quick-action-btn:hover::before {
+            opacity: 1;
+        }
+
+        .quick-action-btn:hover {
+            transform: translateX(10px) scale(1.1);
+            color: white;
+        }
+
+        .quick-action-btn:hover i {
+            color: white;
+        }
+
+        /* Founder Section */
+        .founder-card {
+            background: linear-gradient(135deg, var(--navy), #2d4a6f);
+            border-radius: 30px;
+            padding: 4rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: all 0.5s;
+        }
+
+        .founder-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .founder-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 30px 80px rgba(30, 58, 95, 0.4);
+        }
+
+        .founder-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .founder-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Founder Logo Section */
+        .founder-logo-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .founder-logo-container {
+            max-width: 400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .founder-logo {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            background: linear-gradient(135deg, var(--navy), var(--gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 60px rgba(30, 58, 95, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { box-shadow: 0 20px 60px rgba(30, 58, 95, 0.3), 0 0 30px rgba(212, 175, 55, 0.3); }
+            50% { box-shadow: 0 20px 60px rgba(30, 58, 95, 0.3), 0 0 60px rgba(212, 175, 55, 0.6); }
+        }
+
+        .founder-logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: logoShine 3s infinite;
+        }
+
+        @keyframes logoShine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .founder-logo svg {
+            width: 120px;
+            height: 120px;
+            fill: white;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+        }
+
+        .founder-signature {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--navy);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .founder-title {
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+        }
+
+        /* Animations on Scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 3.5rem; }
+            .section-title { font-size: 2.5rem; }
+            .chatbot-window {
+                width: 95vw;
+                right: -10px;
+                height: 80vh;
+            }
+            .quick-actions {
+                display: none;
+            }
+            body { cursor: auto; }
+            .custom-cursor, .cursor-dot { display: none; }
+            .bits-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.8rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Particle Effects */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: particleFloat 15s infinite;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Registration Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal.active {
+            display: flex;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 30px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            animation: modalSlideIn 0.5s ease;
+            border: 3px solid var(--gold);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-100px) scale(0.8);
+            }
+            to {
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--navy);
+            transition: transform 0.3s;
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+            color: var(--gold);
+        }
+
+        /* Success Popup */
+        .success-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 30px 90px rgba(0,0,0,0.3);
+            z-index: 3000;
+            text-align: center;
+            border: 3px solid var(--gold);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .success-popup.active {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            animation: successPop 0.5s ease;
+        }
+
+        @keyframes successPop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .success-icon i {
+            font-size: 3rem;
+            color: white;
+        }
+
+        .success-popup h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .success-popup p {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .success-popup button {
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--navy), var(--gold));
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .success-popup button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Script Builder Section in Chatbot */
+        .script-builder {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+        }
+
+        .script-builder label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--navy);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .script-builder select,
+        .script-builder input,
+        .script-builder textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .script-builder select:focus,
+        .script-builder input:focus,
+        .script-builder textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .generate-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--navy), var(--gold));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .generated-script {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            border-left: 4px solid var(--gold);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- Enhanced Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-container">
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-horse">
+                <svg viewBox="0 0 100 100">
+                    <path d="M 30 70 Q 35 50 45 40 Q 55 30 65 35 Q 75 40 80 50 Q 85 60 82 70 Q 80 80 75 85 Q 70 90 65 88 Q 60 86 58 80 Q 56 75 54 78 Q 52 81 50 80 Q 48 79 46 75 Z"/>
+                </svg>
+            </div>
+        </div>
+        <div class="loader-text">ARWANYA</div>
+        <div class="loader-bar">
+            <div class="loader-progress"></div>
+        </div>
+    </div>
+
+    <!-- Parallax Background -->
+    <div class="parallax-container">
+        <div class="layer layer-1"></div>
+        <div class="layer layer-2"></div>
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+    </div>
+
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <div class="quick-action-btn" onclick="scrollToSection('committees')" title="Committees">
+            <i class="fas fa-users"></i>
+        </div>
+        <div class="quick-action-btn" onclick="scrollToSection('pricing')" title="Pricing">
+            <i class="fas fa-tags"></i>
+        </div>
+        <div class="quick-action-btn" onclick="scrollToSection('perks')" title="Perks">
+            <i class="fas fa-gift"></i>
+        </div>
+        <div class="quick-action-btn" onclick="openRegistration()" title="Register">
+            <i class="fas fa-ticket-alt"></i>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- BITS Pilani Button -->
+        <a href="https://www.bits-pilani.ac.in" target="_blank" class="bits-button">
+            <i class="fas fa-graduation-cap"></i>
+            <span>BITS Pilani</span>
+        </a>
+
+        <div class="hero-content">
+            <div class="logo-container">
+                <div class="logo-ring"></div>
+                <div class="logo-ring"></div>
+                <div class="logo-ring"></div>
+                <div class="laurel-left"></div>
+                <div class="laurel-right"></div>
+                <div class="horse-silhouette"></div>
+            </div>
+            <h1>ARWANYA</h1>
+            <div class="tagline">Youth Summit 2026</div>
+            <div class="collab-badge">
+                <i class="fas fa-handshake"></i>
+                <span>In Collaboration with IIT Indore & BITS Pilani</span>
+            </div>
+            <p style="margin-top: 2rem; font-size: 1.4rem; color: var(--navy); max-width: 700px; margin-left: auto; margin-right: auto; font-weight: 500;">
+                "Dare to Speak, Driven To Lead"
+            </p>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" style="background: white;">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="section-title reveal">About The Summit</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card-3d reveal">
+                    <div class="text-6xl mb-4">🎓</div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 1rem;">
+                        Premier Educational Experience
+                    </h3>
+                    <p style="color: #666; line-height: 1.8; font-size: 1.1rem;">
+                        Join Delhi's Biggest Youth Movement! Experience world-class Model United Nations with expert guidance from IIT Indore and BITS Pilani.
+                    </p>
+                </div>
+                <div class="card-3d reveal" style="transition-delay: 0.2s;">
+                    <div class="text-6xl mb-4">🌍</div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 1rem;">
+                        Global Impact
+                    </h3>
+                    <p style="color: #666; line-height: 1.8; font-size: 1.1rem;">
+                        Address real-world issues, develop leadership skills, and network with future leaders from across the nation.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Committees Section -->
+    <section id="committees" style="background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="section-title reveal">Committees & Agendas</h2>
+            
+            <!-- Offline Committees -->
+            <div class="mb-12 reveal">
+                <h3 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--navy); margin-bottom: 2rem; text-align: center;">
+                    <i class="fas fa-building" style="color: var(--gold);"></i> Offline Committees
+                </h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="committee-card card-3d p-6">
+                        <div class="text-4xl mb-3">📰</div>
+                        <h4 style="font-weight: 700; color: var(--navy); font-size: 1.3rem; margin-bottom: 0.5rem;">International Press</h4>
+                        <p style="color: #666; font-size: 0.95rem;">Journalists & Photographers documenting every angle.</p>
+                        <span class="inline-block mt-3 px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-semibold">Offline</span>
+                    </div>
+                    
+                    <div class="committee-card card-3d p-6">
+                        <div class="text-4xl mb-3">🇺</div>
+                        <h4 style="font-weight: 700; color: var(--navy); font-size: 1.3rem; margin-bottom: 0.5rem;">UNGA</h4>
+                        <p style="color: #666; font-size: 0.95rem;">Addressing the Growing Threat of Proxy Conflicts and Non-State Armed Groups in Areas of Conflict.</p>
+                        <span class="inline-block mt-3 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">Double Del</span>
+                    </div>
+                    
+                    <div class="committee-card card-3d p-6">
+                        <div class="text-4xl mb-3">♀️</div>
+                        <h4 style="font-weight: 700; color: var(--navy); font-size: 1.3rem; margin-bottom: 0.5rem;">UNCSW</h4>
+                        <p style="color: #666; font-size: 0.95rem;">Addressing the Consequences of Armed Conflict and Gender-Based Violence on Women and Girls.</p>
+                        <span class="inline-block mt-3 px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-semibold">Offline</span>
+                    </div>
+                    
+                    <div class="committee-card card-3d p-6">
+                        <div class="text-4xl mb-3">⚖️</div>
+                        <h4 style="font-weight: 700; color: var(--navy); font-size: 1.3rem; margin-bottom: 0.5rem;">UNHRC</h4>
+                        <p style="color: #666; font-size: 0.95rem;">Safeguarding Freedom of Religion and Protecting the Rights of Religious and Ethnic Minorities.</p>
+                        <span class="inline-block mt-3 px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-semibold">Offline</span>
+                    </div>
+                    
+                    <div class="committee-card card-3d p-6">
+                        <div class="text-4xl mb-3">🌱</div>
+                        <h4 style="font-weight: 700; color: var(--navy); font-size: 1.3rem; margin-bottom: 0.5rem;">UNDP</h4>
+                        <p style="color: #666; font-size: 0.95rem;">Promoting the Achievement of Sustainable Development Goals in Post-Conflict Societies.</p>
+                        <span class="inline-block mt-3 px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-semibold">Offline</span>
+                    </div>
+                    
+                    <div class="committee-card card-3d p-6">
+                        <div class="text-4xl mb-3">🇮🇳</div>
+                        <h4 style="font-weight: 700; color: var(--navy); font-size: 1.3rem; margin-bottom: 0.5rem;">AIPPM</h4>
+                        <p style="color: #666; font-size: 0.95rem;">Addressing the Protection of India's Secular Identity in Light of Rising Communal Conflicts.</p>
+                        <span class="inline-block mt-3 px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-semibold">Offline</span>
+                    </div>
+                    
+                    <div class="committee-card card-3d p-6">
+                        <div class="text-4xl mb-3">🤝</div>
+                        <h4 style="font-weight: 700; color: var(--navy); font-size: 1.3rem; margin-bottom: 0.5rem;">JPC</h4>
+                        <p style="color: #666; font-size: 0.95rem;">Analyzing Measures to Reinforce India's Counter-Terrorism Framework.</p>
+                        <span class="inline-block mt-3 px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-semibold">Offline</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Beginner Committees -->
+            <div class="mb-12 reveal">
+                <h3 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--navy); margin-bottom: 2rem; text-align: center;">
+                    <i class="fas fa-seedling" style="color: var(--gold);"></i> Beginner Committees (0-7 MUNs)
+                </h3>
+                <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                    <div class="committee-card card-3d p-6">
+                        <div class="text-4xl mb-3">🏛️</div>
+                        <h4 style="font-weight: 700; color: var(--navy); font-size: 1.3rem; margin-bottom: 0.5rem;">Lok Sabha</h4>
+                        <p style="color: #666; font-size: 0.95rem;">Evaluating Key Legal Reforms in India, focusing on the Uniform Civil Code.</p>
+                        <span class="inline-block mt-3 px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold">Beginner Friendly</span>
+                    </div>
+                    
+                    <div class="committee-card card-3d p-6">
+                        <div class="text-4xl mb-3">♀️</div>
+                        <h4 style="font-weight: 700; color: var(--navy); font-size: 1.3rem; margin-bottom: 0.5rem;">UNW</h4>
+                        <p style="color: #666; font-size: 0.95rem;">Strengthening Women's Rights through Enhanced Access to Reproductive Healthcare.</p>
+                        <span class="inline-block mt-3 px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold">Beginner Friendly</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Online Committees -->
+            <div class="reveal">
+                <h3 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--navy); margin-bottom: 2rem; text-align: center;">
+                    <i class="fas fa-laptop" style="color: var(--gold);"></i> Online Committees
+                </h3>
+                <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                    <div class="committee-card card-3d p-6">
+                        <div class="text-4xl mb-3">♀️</div>
+                        <h4 style="font-weight: 700; color: var(--navy); font-size: 1.3rem; margin-bottom: 0.5rem;">UNW</h4>
+                        <p style="color: #666; font-size: 0.95rem;">Addressing Gender Inequality and Promoting Equal Opportunities in Academic Institutions, Workplaces, and Religious Institutions.</p>
+                        <span class="inline-block mt-3 px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-semibold">Online</span>
+                    </div>
+                    
+                    <div class="committee-card card-3d p-6">
+                        <div class="text-4xl mb-3">♻️</div>
+                        <h4 style="font-weight: 700; color: var(--navy); font-size: 1.3rem; margin-bottom: 0.5rem;">UNEP</h4>
+                        <p style="color: #666; font-size: 0.95rem;">Regulating the Environmental Footprint of Artificial Intelligence.</p>
+                        <span class="inline-block mt-3 px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-semibold">Online</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section with Selection -->
+    <section id="pricing" style="background: white;">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="section-title reveal">Fee Structure</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="pricing-card reveal" onclick="selectPricing(this, 'online')" data-type="online">
+                    <div class="text-5xl mb-4">💻</div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--navy); margin-bottom: 1rem;">Online Committee</h3>
+                    <div class="price-tag">778</div>
+                    <ul style="text-align: left; margin-top: 2rem; color: #666;">
+                        <li class="mb-2"><i class="fas fa-check" style="color: var(--gold); margin-right: 10px;"></i> Virtual Participation</li>
+                        <li class="mb-2"><i class="fas fa-check" style="color: var(--gold); margin-right: 10px;"></i> Digital Certificate</li>
+                        <li class="mb-2"><i class="fas fa-check" style="color: var(--gold); margin-right: 10px;"></i> Online Networking</li>
+                    </ul>
+                    <button class="select-btn">Select This Plan</button>
+                </div>
+                
+                <div class="pricing-card featured reveal" onclick="selectPricing(this, 'offline')" data-type="offline" style="transition-delay: 0.2s;">
+                    <div class="absolute top-0 left-0 w-full bg-gradient-to-r from-yellow-400 to-yellow-600 text-white text-center py-2 font-bold text-sm">
+                        MOST POPULAR
+                    </div>
+                    <div class="text-5xl mb-4 mt-6">🏛️</div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--navy); margin-bottom: 1rem;">Offline Committee</h3>
+                    <div class="price-tag">1988</div>
+                    <ul style="text-align: left; margin-top: 2rem; color: #666;">
+                        <li class="mb-2"><i class="fas fa-check" style="color: var(--gold); margin-right: 10px;"></i> In-Person Experience</li>
+                        <li class="mb-2"><i class="fas fa-check" style="color: var(--gold); margin-right: 10px;"></i> Delegate Kit</li>
+                        <li class="mb-2"><i class="fas fa-check" style="color: var(--gold); margin-right: 10px;"></i> Gaming Lounge Access</li>
+                        <li class="mb-2"><i class="fas fa-check" style="color: var(--gold); margin-right: 10px;"></i> All Activities Included</li>
+                    </ul>
+                    <button class="select-btn">Select This Plan</button>
+                </div>
+                
+                <div class="pricing-card reveal" onclick="selectPricing(this, 'doubledel')" data-type="doubledel" style="transition-delay: 0.4s;">
+                    <div class="text-5xl mb-4">👥</div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--navy); margin-bottom: 1rem;">Offline Double Del</h3>
+                    <div class="price-tag">3978</div>
+                    <ul style="text-align: left; margin-top: 2rem; color: #666;">
+                        <li class="mb-2"><i class="fas fa-check" style="color: var(--gold); margin-right: 10px;"></i> Two Delegate Positions</li>
+                        <li class="mb-2"><i class="fas fa-check" style="color: var(--gold); margin-right: 10px;"></i> Premium Experience</li>
+                        <li class="mb-2"><i class="fas fa-check" style="color: var(--gold); margin-right: 10px;"></i> Priority Seating</li>
+                        <li class="mb-2"><i class="fas fa-check" style="color: var(--gold); margin-right: 10px;"></i> Exclusive Perks</li>
+                    </ul>
+                    <button class="select-btn">Select This Plan</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hurray Overlay -->
+    <div class="hurray-overlay" id="hurrayOverlay" onclick="closeHurray()">
+        <div class="hurray-content">
+            <h2>🎉 HURRAY! 🎉</h2>
+            <p style="font-size: 1.5rem; margin-bottom: 2rem;">Excellent Choice!</p>
+            <p>Click anywhere to continue to registration</p>
+        </div>
+    </div>
+
+    <!-- Training Sessions -->
+    <section id="training" style="background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="section-title reveal">Training Sessions</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="card-3d p-6 text-center reveal">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center text-white text-3xl">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h4 style="font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;">Personal Branding</h4>
+                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">By Palakh Khanna (4x TedX Speaker)</p>
+                    <span class="text-sm text-yellow-600 font-semibold">4 Sessions</span>
+                </div>
+                
+                <div class="card-3d p-6 text-center reveal" style="transition-delay: 0.1s;">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center text-white text-3xl">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h4 style="font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;">UN Committees</h4>
+                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">By Sankalp Chauhan</p>
+                    <span class="text-sm text-blue-600 font-semibold">Expert Training</span>
+                </div>
+                
+                <div class="card-3d p-6 text-center reveal" style="transition-delay: 0.2s;">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-green-600 to-green-800 rounded-full flex items-center justify-center text-white text-3xl">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <h4 style="font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;">Indian Committees</h4>
+                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">By Sahil Babbar</p>
+                    <span class="text-sm text-green-600 font-semibold">All Sessions</span>
+                </div>
+                
+                <div class="card-3d p-6 text-center reveal" style="transition-delay: 0.3s;">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-purple-600 to-purple-800 rounded-full flex items-center justify-center text-white text-3xl">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h4 style="font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;">Workshop</h4>
+                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">By Er. Adarsh Kumar Singh (5x TedX)</p>
+                    <span class="text-sm text-purple-600 font-semibold">Interactive</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Perks Section -->
+    <section id="perks" style="background: white;">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="section-title reveal">Perks of Being a Delegate</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="card-3d p-6 reveal">
+                    <div class="text-5xl mb-4">🎮</div>
+                    <h4 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 1rem;">Gaming Lounge</h4>
+                    <p style="color: #666;">Complimentary access to PS5 and PS4 consoles</p>
+                </div>
+                
+                <div class="card-3d p-6 reveal" style="transition-delay: 0.1s;">
+                    <div class="text-5xl mb-4">🤾</div>
+                    <h4 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 1rem;">Recreational Activities</h4>
+                    <p style="color: #666;">Flying Paddle and other games included</p>
+                </div>
+                
+                <div class="card-3d p-6 reveal" style="transition-delay: 0.2s;">
+                    <div class="text-5xl mb-4">🎥</div>
+                    <h4 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 1rem;">Exclusive Socials</h4>
+                    <p style="color: #666;">Network with like-minded individuals</p>
+                </div>
+                
+                <div class="card-3d p-6 reveal" style="transition-delay: 0.3s;">
+                    <div class="text-5xl mb-4">🦍</div>
+                    <h4 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 1rem;">Committee Hijack</h4>
+                    <p style="color: #666;">Fun and engaging session</p>
+                </div>
+                
+                <div class="card-3d p-6 reveal" style="transition-delay: 0.4s;">
+                    <div class="text-5xl mb-4">📄</div>
+                    <h4 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 1rem;">Certificates</h4>
+                    <p style="color: #666;">Participation & Merit certificates</p>
+                </div>
+                
+                <div class="card-3d p-6 reveal" style="transition-delay: 0.5s;">
+                    <div class="text-5xl mb-4">🏆</div>
+                    <h4 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 1rem;">Cash Prizes</h4>
+                    <p style="color: #666;">Awards for outstanding delegates</p>
+                </div>
+                
+                <div class="card-3d p-6 reveal" style="transition-delay: 0.6s;">
+                    <div class="text-5xl mb-4">📒</div>
+                    <h4 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 1rem;">Delegate Kits</h4>
+                    <p style="color: #666;">Exclusive merchandise and materials</p>
+                </div>
+                
+                <div class="card-3d p-6 reveal" style="transition-delay: 0.7s;">
+                    <div class="text-5xl mb-4">💼</div>
+                    <h4 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 1rem;">Expert EB</h4>
+                    <p style="color: #666;">Chair: 202+ MUNs | Vice Chair: 101+ MUNs</p>
+                </div>
+                
+                <div class="card-3d p-6 reveal" style="transition-delay: 0.8s;">
+                    <div class="text-5xl mb-4">🎉</div>
+                    <h4 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 1rem;">Aftermovie</h4>
+                    <p style="color: #666;">Social media features & official video</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder Section -->
+    <section style="background: linear-gradient(135deg, var(--cream) 0%, #f0f0f0 100%);">
+        <div class="max-w-4xl mx-auto">
+            <div class="founder-card reveal">
+                <div class="text-6xl mb-6" style="position: relative; z-index: 1;">"</div>
+                <p class="founder-quote">
+                    ARWANYA Youth Summit is not just a conference, it's a revolution. We believe in empowering the youth to dare to speak and be driven to lead. This is your platform to make a difference.
+                </p>
+                <div class="founder-name">
+                    <i class="fas fa-crown" style="margin-right: 10px;"></i>
+                    Aryan Patial - Founder
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder Logo Section -->
+    <section class="founder-logo-section">
+        <div class="founder-logo-container reveal">
+            <div class="founder-logo">
+                <svg viewBox="0 0 100 100">
+                    <path d="M 30 70 Q 35 50 45 40 Q 55 30 65 35 Q 75 40 80 50 Q 85 60 82 70 Q 80 80 75 85 Q 70 90 65 88 Q 60 86 58 80 Q 56 75 54 78 Q 52 81 50 80 Q 48 79 46 75 Z"/>
+                </svg>
+            </div>
+            <div class="founder-signature">Aryan Patial</div>
+            <div class="founder-title">FOUNDER & CEO</div>
+            <p style="margin-top: 1.5rem; color: #666; font-size: 1.1rem;">
+                "Dare to Speak, Driven To Lead"
+            </p>
+        </div>
+    </section>
+
+    <!-- Event Details -->
+    <section style="background: white;">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="section-title reveal">Event Details</h2>
+            <div class="grid md:grid-cols-2 gap-8 mt-12">
+                <div class="card-3d p-8 reveal">
+                    <div class="text-5xl mb-4">📅</div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--navy); margin-bottom: 1rem;">Date</h3>
+                    <p style="font-size: 1.2rem; color: #666;">1st and 2nd August, 2026</p>
+                </div>
+                
+                <div class="card-3d p-8 reveal" style="transition-delay: 0.2s;">
+                    <div class="text-5xl mb-4">📍</div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--navy); margin-bottom: 1rem;">Venue</h3>
+                    <p style="font-size: 1.2rem; color: #666;">Best College in Delhi (NCR)</p>
+                </div>
+            </div>
+            
+            <div class="mt-12 reveal">
+                <a href="https://linktr.ee/arwanyayouthsummit" target="_blank" class="inline-block px-12 py-4 bg-gradient-to-r from-navy to-yellow-500 text-white rounded-full font-bold text-xl hover:shadow-2xl transition transform hover:scale-105" style="background: linear-gradient(135deg, var(--navy), var(--gold));">
+                    <i class="fas fa-ticket-alt" style="margin-right: 10px;"></i>
+                    Apply Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" style="background: linear-gradient(180deg, #f8f9fa 0%, var(--cream) 100%);">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="section-title reveal">Contact Us</h2>
+            <div class="grid md:grid-cols-2 gap-8 mt-12">
+                <div class="card-3d p-8 reveal">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-navy to-blue-600 rounded-full flex items-center justify-center text-white text-3xl">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 0.5rem;">Aryan Patial</h3>
+                    <p style="color: var(--gold); font-weight: 600; margin-bottom: 1rem;">Founder</p>
+                    <p style="font-size: 1.2rem; color: #666;">
+                        <i class="fas fa-phone" style="margin-right: 10px;"></i>
+                        8368201917
+                    </p>
+                </div>
+                
+                <div class="card-3d p-8 reveal" style="transition-delay: 0.2s;">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-yellow-500 to-yellow-700 rounded-full flex items-center justify-center text-white text-3xl">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 0.5rem;">Rishabh Jain</h3>
+                    <p style="color: var(--gold); font-weight: 600; margin-bottom: 1rem;">Treasurer</p>
+                    <p style="font-size: 1.2rem; color: #666;">
+                        <i class="fas fa-phone" style="margin-right: 10px;"></i>
+                        96258 73897
+                    </p>
+                </div>
+            </div>
+            
+            <div class="mt-12 reveal">
+                <a href="https://www.instagram.com/arwanyayouthsummit" target="_blank" class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full font-semibold hover:shadow-lg transition">
+                    <i class="fab fa-instagram" style="margin-right: 10px; font-size: 1.3rem;"></i>
+                    Follow us on Instagram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: var(--navy); color: white; padding: 3rem 2rem; text-align: center;">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-6xl mb-4">🐴</div>
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 1rem;">ARWANYA YOUTH SUMMIT 2026</h3>
+            <p style="color: var(--gold); font-size: 1.2rem; margin-bottom: 2rem;">"Dare to Speak, Driven To Lead"</p>
+            <p style="opacity: 0.8;">© 2026 Arwanya Youth Summit. All rights reserved.</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.6;">In Collaboration with IIT Indore & BITS Pilani</p>
+        </div>
+    </footer>
+
+    <!-- Chatbot -->
+    <div class="chatbot-container">
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <div class="chatbot-avatar">
+                    <i class="fas fa-horse-head"></i>
+                </div>
+                <div class="chatbot-info">
+                    <h3>Arwanya</h3>
+                    <div class="chatbot-status">
+                        <span class="status-dot"></span>
+                        <span>Online - Ready to help!</span>
+                    </div>
+                </div>
+                <button onclick="toggleChatbot()" style="margin-left: auto; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; position: relative; z-index: 1;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="chatbot-messages" id="chatMessages">
+                <!-- Messages will be inserted here -->
+            </div>
+            
+            <div class="chatbot-input">
+                <input type="text" id="chatInput" placeholder="Ask me anything about ARWANYA..." onkeypress="handleKeyPress(event)">
+                <button class="chatbot-send" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="chatbot-toggle" onclick="toggleChatbot()">
+            <i class="fas fa-comments"></i>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div class="modal" id="registrationModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--navy); margin-bottom: 1rem; text-align: center;">
+                Register for ARWANYA 2026
+            </h2>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem;">
+                Fill in your details to secure your spot!
+            </p>
+            <form id="registrationForm" onsubmit="handleRegistration(event)">
+                <div class="mb-4">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--navy); font-weight: 600;">Full Name</label>
+                    <input type="text" id="regName" required style="width: 100%; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 10px; outline: none;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='#e5e7eb'">
+                </div>
+                <div class="mb-4">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--navy); font-weight: 600;">Email</label>
+                    <input type="email" id="regEmail" required style="width: 100%; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 10px; outline: none;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='#e5e7eb'">
+                </div>
+                <div class="mb-4">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--navy); font-weight: 600;">Phone Number</label>
+                    <input type="tel" id="regPhone" required style="width: 100%; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 10px; outline: none;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='#e5e7eb'">
+                </div>
+                <div class="mb-6">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--navy); font-weight: 600;">Select Committee Type</label>
+                    <select id="committeeSelect" required style="width: 100%; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 10px; outline: none;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='#e5e7eb'">
+                        <option value="">Choose your committee...</option>
+                        <option value="online">Online Committee - ₹778</option>
+                        <option value="offline">Offline Committee - ₹1988</option>
+                        <option value="doubledel">Offline Double Del - ₹3978</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full py-4 bg-gradient-to-r from-navy to-yellow-500 text-white rounded-full font-bold text-lg hover:shadow-lg transition transform hover:scale-105" style="background: linear-gradient(135deg, var(--navy), var(--gold));">
+                    Proceed to Payment <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Popup -->
+    <div class="success-popup" id="successPopup">
+        <div class="success-icon">
+            <i class="fas fa-check"></i>
+        </div>
+        <h2>Registration Successful!</h2>
+        <p>Thank you for registering for ARWANYA Youth Summit 2026!<br>
+        You will receive a confirmation email shortly with payment details.</p>
+        <button onclick="closeSuccessPopup()">Great!</button>
+    </div>
+
+    <script>
+        // Loading Screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 2500);
+        });
+
+        // Custom Cursor
+        const cursor = document.querySelector('.custom-cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 10 + 'px';
+            cursor.style.top = e.clientY - 10 + 'px';
+            cursorDot.style.left = e.clientX - 2.5 + 'px';
+            cursorDot.style.top = e.clientY - 2.5 + 'px';
+        });
+
+        document.addEventListener('mousedown', () => {
+            cursor.style.transform = 'scale(0.8)';
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.style.transform = 'scale(1)';
+        });
+
+        // Parallax Effect
+        document.addEventListener('mousemove', (e) => {
+            const layers = document.querySelectorAll('.layer');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            layers.forEach((layer, index) => {
+                const speed = (index + 1) * 20;
+                const xOffset = (0.5 - x) * speed;
+                const yOffset = (0.5 - y) * speed;
+                layer.style.transform = `translate(${xOffset}px, ${yOffset}px) translateZ(-${(index + 1) * 50}px) scale(${1 + (index + 1) * 0.1})`;
+            });
+        });
+
+        // Create Particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Scroll Reveal
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 150;
+
+            revealElements.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        // Smooth Scroll
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Pricing Selection with Hurray Animation
+        function selectPricing(card, type) {
+            // Remove selected class from all cards
+            document.querySelectorAll('.pricing-card').forEach(c => c.classList.remove('selected'));
+            
+            // Add selected class to clicked card
+            card.classList.add('selected');
+            
+            // Show hurray animation
+            setTimeout(() => {
+                showHurray();
+                createConfetti();
+            }, 300);
+            
+            // Store selected type
+            window.selectedPricingType = type;
+        }
+
+        function showHurray() {
+            const overlay = document.getElementById('hurrayOverlay');
+            overlay.classList.add('active');
+            
+            // Auto close after 3 seconds
+            setTimeout(() => {
+                overlay.classList.remove('active');
+                // Open registration modal
+                setTimeout(() => {
+                    openRegistration();
+                    if (window.selectedPricingType) {
+                        document.getElementById('committeeSelect').value = window.selectedPricingType;
+                    }
+                }, 500);
+            }, 2000);
+        }
+
+        function closeHurray() {
+            document.getElementById('hurrayOverlay').classList.remove('active');
+            setTimeout(() => {
+                openRegistration();
+                if (window.selectedPricingType) {
+                    document.getElementById('committeeSelect').value = window.selectedPricingType;
+                }
+            }, 300);
+        }
+
+        function createConfetti() {
+            const overlay = document.getElementById('hurrayOverlay');
+            const colors = ['#d4af37', '#1e3a5f', '#f0d878', '#2d4a6f'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    overlay.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        // Chatbot Logic with Script Builder
+        const chatData = {
+            committees: {
+                'unga': 'UNGA (United Nations General Assembly) - Offline Double Del - ₹3978\n\nAgenda: Addressing the Growing Threat of Proxy Conflicts and Non-State Armed Groups in Areas of Conflict.\n\nThis is one of our most prestigious committees where you\'ll engage in high-level diplomatic discussions!',
+                
+                'uncsw': 'UNCSW (United Nations Commission on the Status of Women) - Offline - ₹1988\n\nAgenda: Addressing the Consequences of Armed Conflict and Gender-Based Violence on Women and Girls across the Middle East, the Russia–Ukraine War, and Other Global Conflict Zones.\n\nA powerful platform to advocate for women\'s rights!',
+                
+                'unhrc': 'UNHRC (United Nations Human Rights Council) - Offline - ₹1988\n\nAgenda: Safeguarding Freedom of Religion and Protecting the Rights of Religious and Ethnic Minorities in the Face of Rising Global Intolerance.\n\nFight for human rights and religious freedom!',
+                
+                'undp': 'UNDP (United Nations Development Programme) - Offline - ₹1988\n\nAgenda: Promoting the Achievement of Sustainable Development Goals in Post-Conflict Societies through Inclusive Economic Recovery.\n\nWork towards sustainable development!',
+                
+                'aippm': 'AIPPM (All India Political Parties Meet) - Offline - ₹1988\n\nAgenda: Addressing the Protection of India\'s Secular Identity in Light of Rising Communal Conflicts and Political Polarization.\n\nDiscuss India\'s political landscape!',
+                
+                'jpc': 'JPC (Joint Parliamentary Committee) - Offline - ₹1988\n\nAgenda: Analyzing Measures to Reinforce India\'s Counter-Terrorism Framework with Special Attention to Domestic Radicalization and Cross-Border Challenges.\n\nTackle national security issues!',
+                
+                'lok sabha': 'Lok Sabha - Offline (Beginner) - ₹1988\n\nAgenda: Evaluating Key Legal Reforms in India, focusing on the Uniform Civil Code, its Implementation in Uttarakhand and Gujarat.\n\nPerfect for beginners (0-7 MUNs experience)!',
+                
+                'unw offline': 'UNW (United Nations Women) - Offline (Beginner) - ₹1988\n\nAgenda: Strengthening Women\'s Rights through Enhanced Access to Reproductive Healthcare, Including Safe Abortion, and Ensuring Justice and Legal Protection for Survivors of Sexual Violence.\n\nBeginner-friendly committee!',
+                
+                'unw online': 'UNW (United Nations Women) - Online - ₹778\n\nAgenda: Addressing Gender Inequality and Promoting Equal Opportunities in Academic Institutions, Workplaces, and Religious Institutions.\n\nParticipate from anywhere!',
+                
+                'unep': 'UNEP (United Nations Environment Programme) - Online - ₹778\n\nAgenda: Regulating the Environmental Footprint of Artificial Intelligence with Emphasis on Energy Consumption, E-Waste Management, and Policy Frameworks.\n\nTackle environmental challenges online!',
+                
+                'press': 'International Press - Offline - ₹1988\n\nDocument every angle of the summit as a journalist or photographer. Capture the essence of ARWANYA!',
+                
+                'international press': 'International Press - Offline - ₹1988\n\nDocument every angle of the summit as a journalist or photographer. Capture the essence of ARWANYA!'
+            },
+            
+            pricing: {
+                'online': 'Online Committee: ₹778/-\n\nPerfect for those who want to experience MUN from the comfort of their home. Includes:\n✓ Virtual participation\n✓ Digital certificate\n✓ Online networking\n✓ All training sessions',
+                
+                'offline': 'Offline Committee: ₹1988/-\n\nThe complete ARWANYA experience! Includes:\n✓ In-person participation\n✓ Delegate kit\n✓ Gaming lounge access (PS5/PS4)\n✓ All recreational activities\n✓ Exclusive socials\n✓ Certificate of participation\n✓ Networking opportunities\n✓ Official aftermovie feature',
+                
+                'doubledel': 'Offline Double Del: ₹3978/-\n\nPremium experience for two delegates! Includes:\n✓ Everything in Offline package (x2)\n✓ Priority seating\n✓ Enhanced networking\n✓ Special recognition\n✓ Best value for serious delegates!'
+            },
+            
+            general: {
+                'date': 'ARWANYA Youth Summit 2026 is on 1st and 2nd August, 2026. Mark your calendars! 📅',
+                
+                'venue': 'The summit will be held at the Best College in Delhi (NCR). Exact venue details will be shared with registered delegates. 📍',
+                
+                'registration': 'Registration is NOW OPEN! Visit https://linktr.ee/arwanyayouthsummit or click the "Apply Now" button. You can also register through me - just let me know which committee you\'re interested in!',
+                
+                'payment': 'Payment verification is handled by our treasurer Rishabh Jain (96258 73897). Once you register, you\'ll receive payment details. We accept UPI, bank transfer, and other digital payment methods. Your spot is confirmed once payment is verified! 💳',
+                
+                'contact': 'For any queries:\n\n👤 Aryan Patial (Founder)\n📞 8368201917\n\n💰 Rishabh Jain (Treasurer)\n📞 96258 73897\n\n📱 Instagram: @arwanyayouthsummit\n\nI\'m also here to help 24/7! 😊',
+                
+                'perks': 'Amazing perks await you:\n🎮 Gaming lounge (PS5/PS4)\n🤾 Recreational activities\n🎥 Exclusive socials\n🦍 Committee hijack session\n📄 Certificates\n🏆 Cash prizes\n📒 Delegate kits\n💼 Expert EB (202+ MUNs experience)\n🎉 Aftermovie feature\n\nAnd so much more!',
+                
+                'training': 'We offer comprehensive training sessions:\n\n1️⃣ Personal Branding by Palakh Khanna (4x TedX speaker) - 4 sessions\n\n2️⃣ All UN Committees by Sankalp Chauhan\n\n3️⃣ All Indian Committees by Sahil Babbar\n\n4️⃣ Workshop by Er. Adarsh Kumar Singh (5x TedX speaker)\n\nThese sessions will prepare you to excel!',
+                
+                'beginner': 'New to MUN? No problem! We have beginner-friendly committees:\n\n🏛️ Lok Sabha - Discussing Uniform Civil Code\n♀️ UNW - Women\'s Rights and Healthcare\n\nThese are perfect for delegates with 0-7 MUNs experience. Our training sessions will help you get started!',
+                
+                'collaboration': 'ARWANYA Youth Summit 2026 is proudly organized in collaboration with IIT Indore and BITS Pilani - two of India\'s premier institutions! This ensures world-class quality and expertise. 🎓',
+                
+                'script': 'I can help you write an amazing speech! Click the "Build Script" button below to get started. I\'ll generate a customized opening speech based on your committee, country, and stance!',
+                
+                'convince': 'Why should you join ARWANYA 2026? Let me tell you:\n\n🌟 It\'s not just a MUN - it\'s a REVOLUTION!\n\n✨ Network with future leaders\n✨ Learn from IIT & BITS experts\n✨ Develop crucial skills (public speaking, negotiation, leadership)\n✨ Win cash prizes and awards\n✨ Get certificates that boost your resume\n✨ Experience Delhi\'s biggest youth movement\n✨ Have FUN while making an impact!\n\nTrust me, you don\'t want to miss this. Your future self will thank you! 🚀\n\nReady to register? Just say "register" and I\'ll help you!',
+                
+                'hello': 'Hello! I\'m Arwanya, your personal assistant for ARWANYA Youth Summit 2026! \n\nI\'m here to help you with:\n• Committee information\n• Registration process\n• Payment verification\n• Script writing assistance\n• Answering any questions\n\nWhat would you like to know?',
+                
+                'hi': 'Hi there! Welcome to ARWANYA Youth Summit 2026! \n\nI\'m here to make your experience amazing. Whether you want to know about committees, pricing, or need help with registration - I\'ve got you covered!\n\nHow can I assist you today?',
+                
+                'hey': 'Hey! Great to see you! 👋\n\nReady to be part of Delhi\'s biggest youth movement? I\'m here to guide you through everything ARWANYA 2026!\n\nWhat\'s on your mind?'
+            }
+        };
+
+        let chatHistory = [];
+        let selectedCommittee = '';
+        let scriptBuilderActive = false;
+
+        function toggleChatbot() {
+            const window = document.getElementById('chatbotWindow');
+            window.classList.toggle('active');
+            
+            if (window.classList.contains('active') && document.getElementById('chatMessages').children.length === 0) {
+                setTimeout(() => {
+                    addBotMessage("Hello! I'm Arwanya, your personal assistant for ARWANYA Youth Summit 2026! 🐴\n\nI'm here to help you with:\n• Committee information\n• Registration process\n• Payment verification\n• Script writing assistance\n• Answering any questions\n\nWhat would you like to know?", true);
+                }, 300);
+            }
+        }
+
+        function addBotMessage(text, showQuickReplies = false, showScriptBuilder = false) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message bot';
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">
+                    <i class="fas fa-horse-head"></i>
+                </div>
+                <div class="message-content" style="white-space: pre-line;">${text}</div>
+            `;
+            
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            
+            if (showQuickReplies) {
+                setTimeout(() => {
+                    showQuickRepliesDiv();
+                }, 500);
+            }
+            
+            if (showScriptBuilder) {
+                setTimeout(() => {
+                    showScriptBuilderInterface();
+                }, 500);
+            }
+        }
+
+        function showScriptBuilderInterface() {
+            const messagesDiv = document.getElementById('chatMessages');
+            const builderDiv = document.createElement('div');
+            builderDiv.className = 'script-builder';
+            builderDiv.id = 'scriptBuilder';
+            builderDiv.innerHTML = `
+                <label>Committee:</label>
+                <select id="scriptCommittee">
+                    <option value="">Select Committee</option>
+                    <option value="UNGA">UNGA</option>
+                    <option value="UNCSW">UNCSW</option>
+                    <option value="UNHRC">UNHRC</option>
+                    <option value="UNDP">UNDP</option>
+                    <option value="AIPPM">AIPPM</option>
+                    <option value="JPC">JPC</option>
+                    <option value="Lok Sabha">Lok Sabha</option>
+                    <option value="UNW">UNW</option>
+                    <option value="UNEP">UNEP</option>
+                </select>
+                
+                <label>Country/Portfolio:</label>
+                <input type="text" id="scriptCountry" placeholder="e.g., United States, India, etc.">
+                
+                <label>Your Stance:</label>
+                <select id="scriptStance">
+                    <option value="supportive">Supportive</option>
+                    <option value="opposed">Opposed</option>
+                    <option value="neutral">Neutral/Balanced</option>
+                </select>
+                
+                <label>Key Points (optional):</label>
+                <textarea id="scriptPoints" rows="3" placeholder="Any specific points you want to include..."></textarea>
+                
+                <button class="generate-btn" onclick="generateScript()">
+                    <i class="fas fa-magic" style="margin-right: 8px;"></i>Generate My Speech
+                </button>
+                
+                <div id="generatedScriptOutput"></div>
+            `;
+            
+            messagesDiv.appendChild(builderDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function generateScript() {
+            const committee = document.getElementById('scriptCommittee').value;
+            const country = document.getElementById('scriptCountry').value;
+            const stance = document.getElementById('scriptStance').value;
+            const points = document.getElementById('scriptPoints').value;
+            
+            if (!committee || !country) {
+                alert('Please fill in Committee and Country fields!');
+                return;
+            }
+            
+            // Show typing indicator
+            const outputDiv = document.getElementById('generatedScriptOutput');
+            outputDiv.innerHTML = '<div class="typing-indicator" style="margin-top: 1rem;"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+            
+            setTimeout(() => {
+                // Generate script based on inputs
+                const script = generateCustomScript(committee, country, stance, points);
+                
+                outputDiv.innerHTML = `
+                    <div class="generated-script">
+                        <strong style="color: var(--navy); display: block; margin-bottom: 1rem; font-size: 1.1rem;">
+                            <i class="fas fa-file-alt" style="margin-right: 8px;"></i>Your Opening Speech:
+                        </strong>
+                        ${script}
+                        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e5e7eb;">
+                            <button onclick="copyScript(this)" style="background: var(--gold); color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; font-weight: 600;">
+                                <i class="fas fa-copy" style="margin-right: 5px;"></i>Copy to Clipboard
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }, 1500);
+        }
+
+        function generateCustomScript(committee, country, stance, points) {
+            const agendas = {
+                'UNGA': 'the growing threat of proxy conflicts and non-state armed groups',
+                'UNCSW': 'the consequences of armed conflict and gender-based violence on women and girls',
+                'UNHRC': 'safeguarding freedom of religion and protecting the rights of religious and ethnic minorities',
+                'UNDP': 'promoting sustainable development goals in post-conflict societies',
+                'AIPPM': 'protecting India\'s secular identity in light of rising communal conflicts',
+                'JPC': 'reinforcing India\'s counter-terrorism framework',
+                'Lok Sabha': 'evaluating key legal reforms in India, focusing on the Uniform Civil Code',
+                'UNW': 'strengthening women\'s rights through enhanced access to reproductive healthcare',
+                'UNEP': 'regulating the environmental footprint of artificial intelligence'
+            };
+            
+            const stanceText = {
+                'supportive': 'strongly supports',
+                'opposed': 'expresses concerns regarding',
+                'neutral': 'believes in a balanced approach to'
+            };
+            
+            let script = `
+                <p><strong>Honorable Chair, Distinguished Delegates,</strong></p>
+                
+                <p style="margin-top: 1rem;">The delegation of <strong>${country}</strong> rises today to address <strong>${agendas[committee] || 'this critical issue'}</strong>.</p>
+                
+                <p style="margin-top: 1rem;">${country} ${stanceText[stance]} ${agendas[committee] || 'this matter'}, recognizing the urgent need for comprehensive action and international cooperation.</p>
+                
+                <p style="margin-top: 1rem;">In the words of our founder, "Dare to Speak, Driven To Lead" - and ${country} dares to speak today on behalf of those affected by this global challenge.</p>
+                
+                ${points ? `<p style="margin-top: 1rem;"><strong>Key Priorities:</strong><br>${points}</p>` : ''}
+                
+                <p style="margin-top: 1rem;">${country} calls upon this committee to work collaboratively towards sustainable solutions that uphold the principles of justice, equality, and human dignity.</p>
+                
+                <p style="margin-top: 1rem;">We look forward to productive deliberations with all member states.<br>
+                <strong>Thank you.</strong></p>
+            `;
+            
+            return script;
+        }
+
+        function copyScript(btn) {
+            const scriptDiv = btn.closest('.generated-script');
+            const text = scriptDiv.innerText.replace('Copy to Clipboard', '');
+            navigator.clipboard.writeText(text).then(() => {
+                btn.innerHTML = '<i class="fas fa-check" style="margin-right: 5px;"></i>Copied!';
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fas fa-copy" style="margin-right: 5px;"></i>Copy to Clipboard';
+                }, 2000);
+            });
+        }
+
+        function addUserMessage(text) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message user';
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="message-content">${text}</div>
+            `;
+            
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const messagesDiv = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot';
+            typingDiv.id = 'typingIndicator';
+            
+            typingDiv.innerHTML = `
+                <div class="message-avatar">
+                    <i class="fas fa-horse-head"></i>
+                </div>
+                <div class="typing-indicator">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            `;
+            
+            messagesDiv.appendChild(typingDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) indicator.remove();
+        }
+
+        function showQuickRepliesDiv() {
+            const messagesDiv = document.getElementById('chatMessages');
+            const repliesDiv = document.createElement('div');
+            repliesDiv.className = 'quick-replies';
+            repliesDiv.style.marginLeft = '55px';
+            
+            const replies = [
+                'Tell me about committees',
+                'Pricing details',
+                'How to register?',
+                'Help me write a script',
+                'Event details',
+                'Convince me to join'
+            ];
+            
+            replies.forEach(reply => {
+                const btn = document.createElement('button');
+                btn.className = 'quick-reply';
+                btn.textContent = reply;
+                btn.onclick = () => {
+                    handleUserInput(reply);
+                    repliesDiv.remove();
+                };
+                repliesDiv.appendChild(btn);
+            });
+            
+            messagesDiv.appendChild(repliesDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            
+            if (text) {
+                handleUserInput(text);
+                input.value = '';
+            }
+        }
+
+        function handleUserInput(text) {
+            addUserMessage(text);
+            showTypingIndicator();
+            
+            // Simulate thinking time for more human-like response
+            setTimeout(() => {
+                generateResponse(text.toLowerCase());
+            }, 800 + Math.random() * 700);
+        }
+
+        function generateResponse(input) {
+            removeTypingIndicator();
+            
+            let response = '';
+            let showReplies = false;
+            let showScriptBuilder = false;
+            
+            // Check for committee queries
+            for (let key in chatData.committees) {
+                if (input.includes(key)) {
+                    response = chatData.committees[key];
+                    showReplies = true;
+                    break;
+                }
+            }
+            
+            // Check for pricing queries
+            if (!response) {
+                for (let key in chatData.pricing) {
+                    if (input.includes(key) || input.includes('fee') || input.includes('cost') || input.includes('price')) {
+                        if (key === 'online' && (input.includes('online') || input.includes('778'))) {
+                            response = chatData.pricing.online;
+                        } else if (key === 'offline' && (input.includes('offline') || input.includes('1988'))) {
+                            response = chatData.pricing.offline;
+                        } else if (key === 'doubledel' && (input.includes('double') || input.includes('3978'))) {
+                            response = chatData.pricing.doubledel;
+                        } else {
+                            response = 'Here are all our pricing options:\n\n' + 
+                                      '💻 Online Committee: ₹778\n' +
+                                      '🏛️ Offline Committee: ₹1988 (Most Popular!)\n' +
+                                      '👥 Offline Double Del: ₹3978\n\n' +
+                                      'Which one interests you?';
+                        }
+                        showReplies = true;
+                        break;
+                    }
+                }
+            }
+            
+            // Check for general queries
+            if (!response) {
+                for (let key in chatData.general) {
+                    if (input.includes(key)) {
+                        response = chatData.general[key];
+                        if (key === 'convince' || key === 'hello' || key === 'hi' || key === 'hey') {
+                            showReplies = true;
+                        }
+                        if (key === 'script') {
+                            showScriptBuilder = true;
+                        }
+                        break;
+                    }
+                }
+            }
+            
+            // Specific intent detection
+            if (!response) {
+                if (input.includes('register') || input.includes('apply') || input.includes('join')) {
+                    response = 'Great choice! 🎉 I\'m excited to have you join ARWANYA 2026!\n\nHere\'s how to register:\n\n1️⃣ Click the "Apply Now" button or visit: https://linktr.ee/arwanyayouthsummit\n\n2️⃣ Fill in your details\n\n3️⃣ Select your preferred committee\n\n4️⃣ Complete payment (I can help verify it!)\n\nOr I can open the registration form for you right now! Would you like that?';
+                    showReplies = true;
+                }
+                else if (input.includes('script') || input.includes('speech') || input.includes('write') || input.includes('build')) {
+                    response = 'I\'d love to help you write an amazing script! 📝\n\nI can generate a customized opening speech for you based on:\n• Your committee\n• Your country/portfolio\n• Your stance on the agenda\n\nClick the button below to get started!';
+                    showScriptBuilder = true;
+                }
+                else if (input.includes('thank')) {
+                    response = 'You\'re very welcome! 😊\n\nRemember, ARWANYA 2026 is going to be incredible, and I can\'t wait to see you there!\n\nIf you need anything else - whether it\'s help with preparation, payment verification, or just someone to talk to about the summit - I\'m always here!\n\nSee you in August! 🐴✨';
+                }
+                else if (input.includes('bye') || input.includes('goodbye')) {
+                    response = 'Goodbye! 👋\n\nDon\'t forget to register for ARWANYA 2026 (August 1-2)!\n\nRemember: "Dare to Speak, Driven To Lead"\n\nI\'ll be here whenever you need me. Have a great day! 🌟';
+                }
+                else if (input.includes('payment') || input.includes('pay') || input.includes('verify')) {
+                    response = 'For payment verification, here\'s what you need to know:\n\n💳 Payment Methods:\n• UPI\n• Bank Transfer\n• Digital Wallets\n\n📞 Contact for Payment:\nRishabh Jain (Treasurer)\nPhone: 96258 73897\n\nOnce you make the payment, send the screenshot to the treasurer. Your spot will be confirmed immediately after verification!\n\nNeed help with the payment process?';
+                    showReplies = true;
+                }
+                else if (input.includes('when') || input.includes('date') || input.includes('august')) {
+                    response = chatData.general.date + '\n\nThat\'s just around the corner! Make sure you register soon to secure your spot. Limited seats available! 🎟️';
+                    showReplies = true;
+                }
+                else if (input.includes('where') || input.includes('location') || input.includes('venue')) {
+                    response = chatData.general.venue + '\n\nThe venue is easily accessible and has all modern facilities. Exact address will be shared with registered delegates!';
+                }
+                else if (input.includes('beginner') || input.includes('new') || input.includes('first time')) {
+                    response = chatData.general.beginner + '\n\nPlus, our training sessions are designed to help beginners excel. You\'ll be well-prepared! 💪';
+                    showReplies = true;
+                }
+                else {
+                    // AI-like generative response for unmatched queries
+                    response = generateAIResponse(input);
+                }
+            }
+            
+            addBotMessage(response, showReplies, showScriptBuilder);
+            
+            // If user seems hesitant, add persuasion
+            if (input.includes('not sure') || input.includes('thinking') || input.includes('maybe') || input.includes('expensive') || input.includes('costly')) {
+                setTimeout(() => {
+                    addBotMessage('Let me tell you why ARWANYA is worth every rupee:\n\n💰 You get:\n• World-class training from IIT & BITS experts\n• Gaming lounge access\n• Delegate kit\n• Certificates that boost your CV\n• Networking with future leaders\n• Cash prizes\n• Memories that last a lifetime\n\n📊 Compare: A regular workshop costs ₹2000+ and gives you half of this!\n\nPlus, this is an INVESTMENT in your future. The skills you learn here will benefit you for years!\n\nStill unsure? What\'s holding you back? I\'m here to help! 😊');
+                }, 1500);
+            }
+        }
+
+        function generateAIResponse(input) {
+            // Contextual AI-like responses
+            const responses = [
+                'That\'s a great question! Let me help you with that. ARWANYA Youth Summit 2026 is designed to be the ultimate MUN experience. Could you tell me more specifically what you\'d like to know? I can help with committees, registration, pricing, or anything else!',
+                
+                'I understand you\'re interested in ARWANYA 2026! We have something for everyone - whether you\'re a beginner or experienced delegate. What aspect would you like to explore first?',
+                
+                'Excellent question! At ARWANYA, we believe in providing the best experience. Our summit features expert training, amazing perks, and unforgettable networking opportunities. What specific information are you looking for?',
+                
+                'I\'m here to make sure you have all the information you need! ARWANYA 2026 (August 1-2) is going to be spectacular. Would you like to know about our committees, the registration process, or perhaps our training sessions?'
+            ];
+            
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+
+        function openRegistration() {
+            document.getElementById('registrationModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('registrationModal').classList.remove('active');
+        }
+
+        function handleRegistration(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const phone = document.getElementById('regPhone').value;
+            const committee = document.getElementById('committeeSelect').value;
+            
+            if (!committee) {
+                alert('Please select a committee type!');
+                return;
+            }
+            
+            // Simulate payment verification process
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-check"></i> Registration Successful!';
+                btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                
+                setTimeout(() => {
+                    closeModal();
+                    showSuccessPopup(name, committee);
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    btn.style.background = '';
+                    e.target.reset();
+                }, 1000);
+            }, 2000);
+        }
+
+        function showSuccessPopup(name, committee) {
+            const popup = document.getElementById('successPopup');
+            const committeeNames = {
+                'online': 'Online Committee',
+                'offline': 'Offline Committee',
+                'doubledel': 'Offline Double Delegation'
+            };
+            
+            popup.querySelector('p').innerHTML = `
+                Dear <strong>${name}</strong>,<br><br>
+                Congratulations! Your registration for <strong>${committeeNames[committee]}</strong> is complete!<br><br>
+                You will receive a confirmation email at your registered email address with payment details.<br><br>
+                For payment verification, contact:<br>
+                <strong>Rishabh Jain (Treasurer)</strong><br>
+                📞 96258 73897
+            `;
+            
+            popup.classList.add('active');
+            
+            // Create celebration confetti
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.background = ['#d4af37', '#1e3a5f', '#f0d878'][Math.floor(Math.random() * 3)];
+                    confetti.style.animation = 'confetti-fall 3s ease-out forwards';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 20);
+            }
+        }
+
+        function closeSuccessPopup() {
+            document.getElementById('successPopup').classList.remove('active');
+        }
+
+        // Close modal on outside click
+        document.getElementById('registrationModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Add smooth scrolling to all links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Add scroll-based navbar effect (if needed in future)
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll <= 0) {
+                lastScroll = 0;
+                return;
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Initialize chatbot with welcome message after page load
+        setTimeout(() => {
+            if (document.getElementById('chatMessages').children.length === 0) {
+                // Chatbot will initialize when opened
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
